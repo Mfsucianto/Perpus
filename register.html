@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Perpustakaan | SKK Migas</title>
+    <link rel="icon" href="images/icon.jpg" type="image/x-icon">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+   <!-- Font Awesome -->
+    <link rel="stylesheet" href="font-awesome-4.5.0/css/font-awesome.min.css"> 
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="ionicons-2.0.1/css/ionicons.min.css"> 
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+  </head>
+  <body class="hold-transition register-page">
+    <div class="register-box">
+      <div class="register-logo">
+       
+                    <img class="img-circle" src="images/logo.jpg" alt="User Avatar">
+                  
+        <a href="index.php"><b>SKK</b> Migas</a>
+      </div>
+
+      <div class="register-box-body">
+        <p class="login-box-msg">Register a new membership</p>
+        <form action="index.html" method="post">
+
+          <div class="form-group has-feedback">
+            <input type="text" id="nmanggota" name="nmanggota" class="form-control" placeholder="Nama Lengkap">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+
+           <div class="form-group has-feedback">
+              <select id="jkel" name="jkel" class="form-control">
+                <option value=''>-- Jenis Kelamin --</option>
+                <option value='L'>Laki-Laki</option>
+                <option value='P'>Perempuan</option>
+                
+              </select>
+          </div>
+
+          <div class="form-group has-feedback">
+            <textarea class="form-control" rows="3" id="alamat" name="alamat" placeholder="Alamat Tempat Tinggal"></textarea>
+           
+          </div>
+
+          
+
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control" name="notelp" id="notelp" placeholder="Nomor Telphone">
+            
+          </div>
+
+          <div class="form-group has-feedback">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Retype password">
+            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+          </div>
+          <div class="row">
+            
+            <div class="col-xs-4">
+              <button type="button" onclick="simpan()" class="btn btn-primary btn-block btn-flat">Register</button>
+            </div><!-- /.col -->
+          </div>
+        </form>
+
+       
+        <a href="login.html" class="text-center">I already have a membership</a>
+      </div><!-- /.form-box -->
+    </div><!-- /.register-box -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+        function simpan(){
+              var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+              var nmanggota   = $('#nmanggota').val();
+              var alamat      = $('#alamat').val();
+              var notelp      = $('#notelp').val();
+              var email       = $('#email').val();
+              var password    = $('#password').val();
+              var repassword  = $('#repassword').val();
+              var jkel        = $('#jkel').val();
+
+              if (nmanggota==''){
+                  alert('Lengkapi Nama Anggota');
+                  $('#nmanggota').focus();
+                  return false;
+              }
+
+              if (jkel==''){
+                  alert('Lengkapi Jenis Kelamin');
+                  $('#jkel').focus();
+                  return false;
+              }
+
+              if (alamat==''){
+                  alert('Lengkapi Alamat');
+                  $('#alamat').focus();
+                  return false;
+              }
+
+              if (notelp==''){
+                  alert('Lengkapi No Telp');
+                  $('#notelp').focus();
+                  return false;
+              }
+
+              if (email==''){
+                  alert('Lengkapi Email');
+                  $('#email').focus();
+                  return false;
+              }
+
+
+              if(email.match(mailformat)){  
+               
+              }else {  
+                alert("alamat email tidak diperbolehkan!!!");  
+                $("#email").focus(); 
+                return false;  
+              }
+
+              if (password==''){
+                  alert('Lengkapi Password');
+                  $('#password').focus();
+                  return false;
+              }
+
+              if (repassword==''){
+                  alert('Ulangi Password anda');
+                  $('#repassword').focus();
+                  return false;
+              }
+
+              if (repassword != password){
+                  alert('Password tidak sama');
+                  $('#repassword').focus();
+                  return false;
+              }
+
+              var jwb=confirm('Simpan ?');
+
+              if (jwb==1){
+                  $.post('update.php', {
+                      action:'SimpanRegister', nmanggota:nmanggota,alamat:alamat,notelp:notelp,email:email,password:password,jkel:jkel}, function(data) {
+                      if (data == 1) {
+                          alert("Registrasi Berhasil");                                                                       
+                          location.replace('index.php')
+                      } else if (data ==2){
+                         alert("Email Sudah Terdaftar");
+                         return false;
+                      } else {
+                         alert("Data gagal Sisimpan");
+                          return false;
+                      }
+                      
+                  }); 
+              }
+
+
+        }
+      
+    </script>
+  </body>
+</html>

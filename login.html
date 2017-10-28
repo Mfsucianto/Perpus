@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="images/icon.jpg" type="image/x-icon">
+    <title>Perpustakaan | SKK Migas</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="font-awesome-4.5.0/css/font-awesome.min.css"> 
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="ionicons-2.0.1/css/ionicons.min.css"> 
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+   <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+  </head>
+  <body class="hold-transition login-page">
+    <div class=" login-box">
+      <div class="login-logo">
+        <a href="index.php"><b>SKK</b> Migas</a>
+      </div><!-- /.login-logo -->
+      <div class="login-box-body">
+        <p class="login-box-msg">Please Sign First</p>
+      
+          <div class="form-group has-feedback">
+            <input type="email" id="userid" name="userid" class="form-control" placeholder="Email">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" id="vPassword" name="vPassword" class="form-control" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              
+            </div><!-- /.col -->
+           
+            <div class="box-footer btn-group">
+                 
+                  <button onclick="cekLogin()" class="btn btn-info pull-right">Sign In</button>
+                 
+            </div>
+                  Belum Punya akses ? <a href='register.html' >Daftar disini</a>
+          </div>
+
+         
+       
+
+       
+
+        
+
+      </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+   
+    <script>
+     
+
+
+      function cekLogin(){
+        var userid = $("#userid").val();
+        var password = $("#vPassword").val();
+
+        if (userid=="") {
+            alert("Masukan Email anda");
+            $("#userid").focus();
+            return false;
+        }
+
+       
+        if (password=="") {
+            alert("Masukan password anda");
+            $("#vPassword").focus();
+            return false;
+        }
+
+        login(userid,password);
+        
+
+      }
+
+      function login(userid,password){
+        $.post('update.php', {
+            action:'login', _userid:userid,_password:password}, function(data) {
+            if (data > 0) {                                                                       
+                location.replace('index.php')
+            } else {
+               alert("Wrong Password");
+                return false;
+            }
+            
+        }); 
+
+
+      }
+
+    </script>
+  </body>
+</html>
